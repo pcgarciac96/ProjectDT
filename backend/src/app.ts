@@ -5,6 +5,7 @@ import routes from './routes';
 import users from './routes/userRouter';
 
 
+
 const app = express();
 app.use(morgan("dev"), cors(), express.json());
 app.use("/api",routes,users);

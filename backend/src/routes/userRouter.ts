@@ -11,7 +11,7 @@ router
 router.route("/login").post(controller.login);
 router
   .route("/users")
-  .post(verifyToken, controller.addUser)
+  .post(controller.addUser)
 //   .get(verifyToken, controller.getUsers);
 // router
 //   .route("/users/:rowId")
