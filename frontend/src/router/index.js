@@ -1,25 +1,52 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
-
+import { createRouter, createWebHistory } from "vue-router";
+import store from "../store";
+import decode from "jwt-decode";
+import moment from "moment";
+import { autoLogin } from "../helpers/StoreHelper.js";
+import { routes } from "./Routes";
+const history = createWebHistory();
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes
-})
-
+  history,
+  routes,
+});
+router.beforeEach(async (to, from, next) => {
+  await autoLogin();
+  if (to.path == "/") {
+    router.push({ path: "login" });
+  }
+  window.scrollTo(0, 0);
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    let localStorageToken = localStorage.getItem("token");
+    if (store.state.user && store.state.token && localStorageToken) {
+      let token = store.state.token;
+      try {
+        if (token) {
+          let decodeToken = decode(token);
+          var time = new Date(decodeToken.exp * 1000);
+          let fechaExp = moment(time).format("DD/MM/YYYY HH:mm:ss");
+          let fechaActual = moment().format("DD/MM/YYYY HH:mm:ss");
+          if (fechaExp <= fechaActual) {
+            throw "Token Expirado";
+          } else {
+            // to.meta.permissions = await getPermissions(to.meta.idModule);
+            next();
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        next({
+          path: "/login",
+          query: { redirect: to.path },
+        });
+      }
+    } else {
+      next({
+        path: "/login",
+        query: { redirect: to.path },
+      });
+    }
+  } else {
+    next();
+  }
+});
 export default router
