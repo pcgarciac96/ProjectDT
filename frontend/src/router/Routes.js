@@ -10,5 +10,13 @@ export const routes = [
     component: () => import("../views/userLogin.vue"),
     meta: { requiresAuth: false },
   },
+  {
+    path: "/Profile",
+    name: "Profile",
+    component: () => import("../views/userProfile.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
  
 ];

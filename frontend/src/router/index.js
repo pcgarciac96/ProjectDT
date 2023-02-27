@@ -12,7 +12,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   await autoLogin();
   if (to.path == "/") {
-    router.push({ path: "login" });
+    router.push({ path: "/login" });
   }
   window.scrollTo(0, 0);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
@@ -35,13 +35,13 @@ router.beforeEach(async (to, from, next) => {
       } catch (error) {
         console.log(error);
         next({
-          path: "/login",
+          path: "/Profile",
           query: { redirect: to.path },
         });
       }
     } else {
       next({
-        path: "/login",
+        path: "/Profile",
         query: { redirect: to.path },
       });
     }
