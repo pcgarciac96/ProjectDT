@@ -4,11 +4,11 @@
     <div
       class="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen"
     >
-      <img
+      <!-- <img
         src="https://source.unsplash.com/random"
         alt=""
         class="w-full h-full object-cover"
-      />
+      /> -->
     </div>
 
     <div
@@ -19,7 +19,7 @@
           Log in to your account
         </h1>
 
-        <form class="mt-6" action="#" method="POST">
+        <div class="mt-6">
           <div>
             <label class="block text-gray-700">Email Address</label>
             <input
@@ -59,12 +59,11 @@
 
           <button
             @click="userLogin()"
-            type="submit"
             class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
           >
             Log In
           </button>
-        </form>
+        </div>
 
         <hr class="my-6 border-gray-300 w-full" />
 
@@ -80,11 +79,13 @@
 </template>
 <script>
 import { ref } from "vue";
-import apiNode from "../services/apiNode";
+import { login } from "../services/userService";
+import router from "../router";
+import { saveToken } from "../services/userAuthService.js";
 export default {
   setup() {
-    const email = ref("");
-    const password = ref("");
+    const email = ref("garcuapunk@gmail.com");
+    const password = ref("123456");
 
     // const userLogin = () => {
     //     console.log(email.value,password.value);
@@ -92,22 +93,30 @@ export default {
     //     .then((res) => console.log(res))
     //     .catch((error) => console.log(error));
     // };
-    const userLogin = async () => {
-        console.log(apiNode
-        );
-      let response = await apiNode.login({
+    const userLogin = () => {
+      const user = {
         email: email.value,
         password: password.value,
-      });
-      console.log(response);
-    //   if (response && response.status == "error") {
-    //     console.log("hpña");
-    //     if (response.type == 1) {
-    //       console.log("hpña");
-    //     } else if (response.type == 2) {
-    //       console.log("hpña");
-    //     }
-    //   }
+      };
+      login(user)
+        .then((res) => {
+          saveToken(res.data.accessToken);
+          router.push({ name: "Profile" });
+        })
+        .catch((error) => console.log(error));
+      //   const response = await apiNode.login({
+      //     email: email.value,
+      //     password: password.value,
+      //   });
+      //   console.log(response);
+      // //   if (response && response.status == "error") {
+      // //     console.log("hpña");
+      // //     if (response.type == 1) {
+      // //       console.log("hpña");
+      // //     } else if (response.type == 2) {
+      // //       console.log("hpña");
+      // //     }
+      // //   }
     };
     return { userLogin, email, password };
   },

@@ -1,13 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import store from "../store";
 import decode from "jwt-decode";
 import moment from "moment";
 import { autoLogin } from "../helpers/StoreHelper.js";
 import { routes } from "./Routes";
-const history = createWebHistory();
+// const history = createWebHistory();
 const router = createRouter({
-  history,
-  routes,
+  history: createWebHistory(),
+  routes: routes
 });
 router.beforeEach(async (to, from, next) => {
   await autoLogin();
@@ -17,8 +16,8 @@ router.beforeEach(async (to, from, next) => {
   window.scrollTo(0, 0);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     let localStorageToken = localStorage.getItem("token");
-    if (store.state.user && store.state.token && localStorageToken) {
-      let token = store.state.token;
+    if (localStorageToken) {
+      let token = localStorageToken;
       try {
         if (token) {
           let decodeToken = decode(token);
@@ -35,13 +34,13 @@ router.beforeEach(async (to, from, next) => {
       } catch (error) {
         console.log(error);
         next({
-          path: "/Profile",
+          path: "/login",
           query: { redirect: to.path },
         });
       }
     } else {
       next({
-        path: "/Profile",
+        path: "/login",
         query: { redirect: to.path },
       });
     }
