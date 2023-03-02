@@ -18,5 +18,13 @@ export const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/Register",
+    name: "Register",
+    component: () => import("../views/userRegister.vue"),
+    meta: {
+      requiresAuth: false,
+    },
+  },
  
 ];

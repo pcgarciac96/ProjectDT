@@ -38,9 +38,20 @@ async function addUser(req: Request, res: Response, next: NextFunction) {
     return res.status(200).json(responseMessage.errorServer);
   }
 }
+async function getUser(req: Request, res: Response, next: NextFunction) {
+ try {
+    const user = await Users.findById(req.params._id);
+    res.status(200).json(user);
+  } catch (error) {
+    return res.json({
+      message: error,
+    });
+  }
+}
 
 export default {
   login,
-  addUser
+  addUser,
+  getUser
 
 };

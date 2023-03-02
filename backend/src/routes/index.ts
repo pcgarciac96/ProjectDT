@@ -1,5 +1,4 @@
 import { Router } from "express";
-import User from '../models/userModel';
 const router = Router();
 
 router.get('/', (req,res) =>{

@@ -16,7 +16,7 @@
     >
       <div class="w-full h-100">
         <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">
-          Log in to your account
+          Iniciar Sesión
         </h1>
 
         <div class="mt-6">
@@ -49,13 +49,7 @@
             />
           </div>
 
-          <div class="text-right mt-2">
-            <a
-              href="#"
-              class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700"
-              >Forgot Password?</a
-            >
-          </div>
+       
 
           <button
             @click="userLogin()"
@@ -68,9 +62,8 @@
         <hr class="my-6 border-gray-300 w-full" />
 
         <p class="mt-8">
-          Need an account?
-          <a href="#" class="text-blue-500 hover:text-blue-700 font-semibold"
-            >Create an account</a
+          <a @click="$router.push('/Register')" class="text-blue-500 hover:text-blue-700 font-semibold"
+            >Crear una cuenta</a
           >
         </p>
       </div>
