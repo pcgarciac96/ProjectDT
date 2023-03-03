@@ -400,3 +400,22 @@
     </div>
   </div>
 </template>
+<script>
+import { onMounted } from "vue"
+import store from "../store/index"
+
+
+export default ({
+  setup() {
+    onMounted(()=>{
+      getDataUser();
+    });
+
+    async function getDataUser(){
+      console.log(store.state.user);
+    }
+
+    return{getDataUser};
+  },
+})
+</script>

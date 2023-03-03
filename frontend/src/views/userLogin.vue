@@ -79,13 +79,6 @@ export default {
   setup() {
     const email = ref("garcuapunk@gmail.com");
     const password = ref("123456");
-
-    // const userLogin = () => {
-    //     console.log(email.value,password.value);
-    //   login({email,password})
-    //     .then((res) => console.log(res))
-    //     .catch((error) => console.log(error));
-    // };
     const userLogin = () => {
       const user = {
         email: email.value,
@@ -97,19 +90,7 @@ export default {
           router.push({ name: "Profile" });
         })
         .catch((error) => console.log(error));
-      //   const response = await apiNode.login({
-      //     email: email.value,
-      //     password: password.value,
-      //   });
-      //   console.log(response);
-      // //   if (response && response.status == "error") {
-      // //     console.log("hpña");
-      // //     if (response.type == 1) {
-      // //       console.log("hpña");
-      // //     } else if (response.type == 2) {
-      // //       console.log("hpña");
-      // //     }
-      // //   }
+
     };
     return { userLogin, email, password };
   },

@@ -10,6 +10,6 @@ router
 // router.route("/users/resetPassword").post(controller.resetPassword);
 router.route("/login").post(controller.login);
 router.route("/users").post(controller.addUser);
-router.route("/getUser").get(controller.getUser);
+router.route("/getUser/:id").get(controller.getUser);
 
 export default router;

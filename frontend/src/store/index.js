@@ -13,9 +13,6 @@ const store = createStore({
     setToken(state, token) {
       state.token = token;
     },
-    setRefreshToken(state, refreshtoken) {
-      state.refreshToken = refreshtoken;
-    },
     setUser(state, user) {
       state.user = user;
     },
@@ -24,29 +21,22 @@ const store = createStore({
   actions: {
     saveToken({ commit }, token) {
       const jwt = sign(token, secret);
-      commit("setToken", token.access_token);
-      commit("setUser", token.user);
-      localStorage.setItem("token", jwt);
-    },
-    saveRefreshToken({ commit }, refreshtoken) {
-      commit("setRefreshToken", refreshtoken);
-      localStorage.setItem("refreshToken", refreshtoken);
+      commit("setToken", token);
+      commit("setUser", jwt);
+      localStorage.setItem("token", token);
     },
     autoLogin({ commit }) {
       let token = localStorage.getItem("token");
-      let refreshtoken = localStorage.getItem("refreshtoken");
       if (token) {
         const decodeToken = decode(token);
-        commit("setRefreshToken", refreshtoken);
-        commit("setToken", decodeToken.access_token);
-        commit("setUser", decodeToken.user);
+        commit("setToken", token);
+        commit("setUser", decodeToken);
       }
     },
 
     signOff({ commit }) {
       commit("setToken", null);
       commit("setUser", null);
-      commit("setRefreshToken", null);
       localStorage.removeItem("token");
       router.push({
         name: "Login",

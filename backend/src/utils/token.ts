@@ -1,11 +1,16 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config";
-import { IPayload, IPayloadResetPass } from "../interfaces/token.interfaces";
+import { IPayloadResetPass } from "../interfaces/token.interfaces";
+import IUser from "../interfaces/userInterfaces";
 
-export async function createToken(payload: IPayload): Promise<string> {
-  return jwt.sign(payload, config.TOKEN_SECRET, {
-    expiresIn: "4h",
-  });
+export function createToken(payload: IUser) {
+  return jwt.sign(
+    { user: payload.name, id: payload._id },
+    config.TOKEN_SECRET,
+    {
+      expiresIn: "4h",
+    }
+  );
 }
 
 export async function createTokenResetPass(

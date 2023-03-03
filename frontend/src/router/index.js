@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import decode from "jwt-decode";
 import moment from "moment";
+import store from "../store/index"
 import { autoLogin } from "../helpers/StoreHelper.js";
 import { routes } from "./Routes";
 // const history = createWebHistory();
@@ -16,11 +17,14 @@ router.beforeEach(async (to, from, next) => {
   window.scrollTo(0, 0);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     let localStorageToken = localStorage.getItem("token");
-    if (localStorageToken) {
-      let token = localStorageToken;
+    console.log('localStorageToken',store.state.user);
+    console.log('store',store.state);
+    if (store.state.user && store.state.token && localStorageToken) {
+      let token = store.state.token;
       try {
         if (token) {
           let decodeToken = decode(token);
+          console.log(decodeToken);
           var time = new Date(decodeToken.exp * 1000);
           let fechaExp = moment(time).format("DD/MM/YYYY HH:mm:ss");
           let fechaActual = moment().format("DD/MM/YYYY HH:mm:ss");
