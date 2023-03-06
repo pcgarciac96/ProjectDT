@@ -1,4 +1,4 @@
-import app from "../routes/userRouter.ts"
+import app from "../app"
 import { request } from "supertest"
 
 describe('GET /login', () =>{
