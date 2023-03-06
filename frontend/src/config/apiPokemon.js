@@ -1,4 +1,4 @@
-const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20";
+const urlPokemon = "https://pokeapi.co/api/v2/pokemon/";
 // const urlImagenPokemon =
 //   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 import axios from "axios";

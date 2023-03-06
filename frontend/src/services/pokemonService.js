@@ -1,3 +1,3 @@
 import { apiPokemon } from "@/config/apiPokemon";
 
-export const getPokemonList = () => apiPokemon.get();
+export const getPokemonList = (id) => apiPokemon.get(id);
