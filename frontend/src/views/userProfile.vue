@@ -81,7 +81,6 @@ export default {
     let dataUser = ref({});
     onMounted(() => {
       getDataUser();
-      getDataPokemon();
     });
 
     async function getDataUser() {
@@ -89,17 +88,12 @@ export default {
       getUser(id)       
       .then((res) => {
         dataUser.value= res.data
-          console.log(res.data);
-          // saveToken(res.data.accessToken);
         })
         .catch((error) => console.log(error));
-      console.log();
     }
-    async function getDataPokemon() {
-      
-    }
+   
 
-    return { getDataUser, getDataPokemon, pokemonList, dataUser};
+    return { getDataUser, pokemonList, dataUser};
   },
 };
 </script>

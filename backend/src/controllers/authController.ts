@@ -14,8 +14,6 @@ async function login(req: Request, res: Response) {
     });
 
     if (user) {
-      // const match = await bcrypt.compare(req.body.password, user.password);
-      // if (!match) return res.status(401).send({ message: "Password incorrecta" });
       return res
         .status(200)
         .json({ message: "Bienvenido", accessToken: createToken(user) });
@@ -50,17 +48,14 @@ async function getUser(req: Request, res: Response, next: NextFunction) {
   }
 }
 async function addPokemon(req: Request, res: Response, next: NextFunction) {
- 
-  
   try {
     console.log(req.body.pokeID);
-    // let pokemonID = req.body.pokeID;
     await Users.findOneAndUpdate(
       {
-        _id: req.params._id
+        _id: req.params._id,
       },
-     {
-      $push:{pokeID: req.body.pokeID}
+      {
+        $push: { pokeID: req.body.pokeID },
       }
     );
     return res.status(200).json(responseMessage.addSuccess);
@@ -74,5 +69,5 @@ export default {
   login,
   addUser,
   getUser,
-  addPokemon
+  addPokemon,
 };

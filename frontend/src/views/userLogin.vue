@@ -77,8 +77,8 @@ import router from "../router";
 import { saveToken } from "../services/userAuthService.js";
 export default {
   setup() {
-    const email = ref("garcuapunk@gmail.com");
-    const password = ref("123456");
+    const email = ref("");
+    const password = ref("");
     const userLogin = () => {
       const user = {
         email: email.value,
